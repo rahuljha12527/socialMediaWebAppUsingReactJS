@@ -5,6 +5,9 @@ import {
   SIGNUP_START,
   SIGNUP_FAILED,
   SIGNUP_SUCCESS,
+  AUTHENTICATE_USER,
+  LOG_OUT,
+  CLEAR_AUTH_STATE,
 } from './actionTypes';
 import { APIUrls } from '../helpers/urls';
 import { getFormBody } from '../helpers/utils';
@@ -46,7 +49,7 @@ export function login(email, password) {
       .then((data) => {
         console.log('data', data);
         if (data.success) {
-          localStorage.setItem('token',data.data.token);
+          localStorage.setItem('token', data.data.token);
           dispatch(loginSuccess(data.data.user));
           return;
         }
@@ -57,20 +60,19 @@ export function login(email, password) {
 
 export function signup(name, email, password, confirm_password) {
   return (dispatch) => {
-    
     const url = APIUrls.signup();
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: getFormBody({ name, email, password, confirm_password, }),
+      body: getFormBody({ name, email, password, confirm_password }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('data', data);
         if (data.success) {
-          localStorage.setItem('token',data.data.token);
+          localStorage.setItem('token', data.data.token);
           dispatch(signupSuccess(data.data.user));
           return;
         }
@@ -79,7 +81,6 @@ export function signup(name, email, password, confirm_password) {
       });
   };
 }
-
 
 export function signupStart() {
   return {
@@ -100,3 +101,24 @@ export function signupSuccess(user) {
     user,
   };
 }
+
+export function authenticateUser(user) {
+  return {
+    type: AUTHENTICATE_USER,
+    user,
+  };
+}
+
+export function logoutUser() {
+  return {
+    type: LOG_OUT,
+  };
+}
+
+export function clearAuthState() {
+  return {
+    type: CLEAR_AUTH_STATE,
+  };
+}
+
+
