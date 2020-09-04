@@ -30,25 +30,6 @@ export function loginSuccess(user) {
     user,
   };
 }
-export function signupStart() {
-  return {
-    type: SIGNUP_START,
-  };
-}
-
-export function signupFailed(errorMessage) {
-  return {
-    type: SIGNUP_FAILED,
-    error: errorMessage,
-  };
-}
-
-export function signupSuccess(user) {
-  return {
-    type: SIGNUP_SUCCESS,
-    user,
-  };
-}
 
 export function login(email, password) {
   return (dispatch) => {
@@ -75,7 +56,7 @@ export function login(email, password) {
 
 export function signup(name, email, password, confirm_password) {
   return (dispatch) => {
-    dispatch(signupStart());
+    
     const url = APIUrls.signup();
     fetch(url, {
       method: 'POST',
@@ -95,5 +76,26 @@ export function signup(name, email, password, confirm_password) {
 
         dispatch(signupFailed(data.message));
       });
+  };
+}
+
+
+export function signupStart() {
+  return {
+    type: SIGNUP_START,
+  };
+}
+
+export function signupFailed(errorMessage) {
+  return {
+    type: SIGNUP_FAILED,
+    error: errorMessage,
+  };
+}
+
+export function signupSuccess(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    user,
   };
 }
