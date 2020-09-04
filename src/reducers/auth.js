@@ -29,7 +29,7 @@ export default function auth(state = initialAuthState, action) {
     case LOGIN_FAILED:
       return {
         ...state,
-        isLoggedin: false,
+        inProgress: false,
          error: action.error,
       };
 

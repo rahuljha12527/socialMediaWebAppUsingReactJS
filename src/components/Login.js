@@ -63,7 +63,7 @@ class Login extends Component {
         <div className="field">
           {inProgress ? (
             <button onClick={this.handleFormSubmit} disabled={inProgress}>
-              Loggin in...
+              Logging in...
             </button>
           ) : (
             <button onClick={this.handleFormSubmit}  disabled={inProgress}>

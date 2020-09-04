@@ -20,7 +20,7 @@ export function loginFailed(errorMessage) {
 export function loginSuccess(user){
   return {
     type:LOGIN_SUCCESS,
-    user
+    user,
   };
 }
 export function login(email, password) {
