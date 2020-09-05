@@ -1,12 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import { fetchPosts } from '../actions/posts';
 import { Home, Navbar, Page404, Login, Signup } from './index';
 import * as jwtDecode from 'jwt-decode';
 import PropTypes from 'prop-types';
 import { authenticateUser } from '../actions/auth';
 
+const Settings = () => <div>Setting</div>;
+
+const PrivateRoute = (privateRouteProps) => {
+  const { isLoggedin, path, component: Component } = privateRouteProps;
+
+  return (
+    <Route
+      path={path}
+      render={(props) => {
+        return isLoggedin ? <Component {...props} /> : <Redirect to="/login" />;
+      }}
+    />
+  );
+};
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
@@ -14,7 +33,7 @@ class App extends Component {
     const token = localStorage.getItem('token');
 
     if (token) {
-      const user = jwtDecode(token); 
+      const user = jwtDecode(token);
       console.log('user', user);
 
       this.props.dispatch(
@@ -28,9 +47,9 @@ class App extends Component {
   }
 
   render() {
-    const { posts } = this.props;
+    const { posts, auth } = this.props;
     return (
-      <Router> 
+      <Router>
         <div>
           <Navbar />
           {/* <PostsList posts={posts} /> */}
@@ -46,6 +65,11 @@ class App extends Component {
 
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <PrivateRoute
+              path="/settings"
+              component={Settings}
+              isLoggedin={auth.isLoggedin}
+            />
             <Route component={Page404} />
           </Switch>
         </div>
@@ -57,6 +81,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     posts: state.posts,
+    auth: state.auth,
   };
 }
 
