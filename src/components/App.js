@@ -7,12 +7,12 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Signup } from './index';
+import { Home, Navbar, Page404, Login, Signup ,Settings} from './index';
 import * as jwtDecode from 'jwt-decode';
 import PropTypes from 'prop-types';
 import { authenticateUser } from '../actions/auth';
 
-const Settings = () => <div>Setting</div>;
+
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, path, component: Component } = privateRouteProps;
