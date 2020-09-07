@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { login, clearAuthState } from '../actions/auth';
-
 
 class Login extends Component {
   constructor(props) {
@@ -41,10 +40,12 @@ class Login extends Component {
     }
   };
   render() {
-    const { error, inProgress ,isLoggedin} = this.props.auth;
+    const { error, inProgress, isLoggedin } = this.props.auth;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
 
-    if(isLoggedin){
-      return <Redirect to="/" />; 
+
+    if (isLoggedin) {
+      return <Redirect to={from} />;
     }
     return (
       <form className="login-form">
